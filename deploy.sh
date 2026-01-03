@@ -388,7 +388,7 @@ router.post('/register', async (req: Request, res: Response): Promise<void> => {
     const existingUser = await User.findOne({ email });
     if (existingUser) { res.status(400).json({ code: 400, message: '该邮箱已注册' }); return; }
     const user = await User.create({ email, password, nickname });
-    const token = jwt.sign({ userId: user._id }, config.jwt.secret, { expiresIn: config.jwt.expiresIn });
+    const token = jwt.sign({ userId: user._id }, config.jwt.secret, { expiresIn: '7d' });
     res.status(201).json({ code: 200, message: '注册成功', data: { token, user: { id: user._id, email: user.email, nickname: user.nickname } } });
   } catch (error) { console.error('Register error:', error); res.status(500).json({ code: 500, message: '服务器错误' }); }
 });
@@ -401,7 +401,7 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
     if (!user) { res.status(401).json({ code: 401, message: '邮箱或密码错误' }); return; }
     const isMatch = await user.comparePassword(password);
     if (!isMatch) { res.status(401).json({ code: 401, message: '邮箱或密码错误' }); return; }
-    const token = jwt.sign({ userId: user._id }, config.jwt.secret, { expiresIn: config.jwt.expiresIn });
+    const token = jwt.sign({ userId: user._id }, config.jwt.secret, { expiresIn: '7d' });
     res.json({ code: 200, message: '登录成功', data: { token, user: { id: user._id, email: user.email, nickname: user.nickname } } });
   } catch (error) { console.error('Login error:', error); res.status(500).json({ code: 500, message: '服务器错误' }); }
 });
