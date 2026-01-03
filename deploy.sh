@@ -35,7 +35,7 @@ cat > package.json << 'PKGEOF'
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.0.3",
     "nodemon": "^3.1.10",
-    "ts-node": "^10.9.3",
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   }
 }
